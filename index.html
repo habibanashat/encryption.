@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.js">
+    <title>Log in</title>
+    <link rel="stylesheet" href="log in.css">
+    <link rel="icon" href="log.jpg">
+</head>
+<body>
+    <div class="box" >
+        <span class="borderline"></span>
+        <form id="cipherForm">
+            
+            <label for="text" style="font-size: 30px; color: aliceblue;">Text:</label>
+            <input type="text" id="text" name="text" required style=" outline: none;
+            border: none;
+            padding: 9px 25px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.9em;
+            border-radius: 4px;
+          
+            margin-top: 10px;"><br><br>
+    
+            <label for="shift" style="font-size: 30px; color: aliceblue;">Key:</label>
+            <input type="number" id="shift" name="shift" required style=" outline: none;
+            border: none;
+            padding: 9px 25px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.9em;
+            border-radius: 4px;
+          
+            margin-top: 10px;"><br><br>
+      
+            <input type="submit"  value="Encryption"  style=" outline: none;
+            border: none;
+            padding: 9px 25px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.9em;
+            border-radius: 4px;
+          
+            margin-top: 10px;">
+       
+            <div class="output" id="result" style=" font-size: 20px;padding: 10px; color: aliceblue;"></div>
+        </form>
+    
+        
+    
+        <script>
+            // دالة التشفير باستخدام Caesar Cipher
+            function caesarCipher(text, shift) {
+                let result = '';
+    
+                // المرور عبر كل حرف في النص
+                for (let i = 0; i < text.length; i++) {
+                    let char = text[i];
+    
+                    // إذا كان الحرف حرفًا صغيرًا
+                    if (/[a-z]/.test(char)) {
+                        result += String.fromCharCode(((char.charCodeAt(0) - 97 + shift) % 26 + 26) % 26 + 97);
+                    }
+                    // إذا كان الحرف حرفًا كبيرًا
+                    else if (/[A-Z]/.test(char)) {
+                        result += String.fromCharCode(((char.charCodeAt(0) - 65 + shift) % 26 + 26) % 26 + 65);
+                    }
+                    // إذا كان الحرف غير حرف أبجدي
+                    else {
+                        result += char;
+                    }
+                }
+    
+                return result;
+            }
+    
+            // حدث عند إرسال النموذج
+            document.getElementById('cipherForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // منع إرسال النموذج فعليًا
+    
+                // الحصول على النص والإزاحة من الحقول
+                const text = document.getElementById('text').value;
+                const shift = parseInt(document.getElementById('shift').value, 10);
+    
+                // تطبيق التشفير
+                const encryptedText = caesarCipher(text, shift);
+    
+                // عرض النص المشفر
+                document.getElementById('result').textContent = 'Encrypted Text 👉 ' + encryptedText;
+            });
+        </script>
+    
+    
+</body>
+</html>
